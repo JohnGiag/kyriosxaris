@@ -1,0 +1,166 @@
+# ============================================
+# Node.js / npm
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ============================================
+# Firebase - Sensitive Files
+# ============================================
+# Firebase configuration with API keys
+**/google-services.json
+**/GoogleService-Info.plist
+firebase-debug.log
+.firebase/
+# .firebaserc - Uncomment if you want to keep project ID private
+# .firebaserc
+
+# Firebase Functions
+functions/lib/
+functions/.firebase/
+functions/node_modules/
+
+# ============================================
+# Android - Sensitive & Build Files
+# ============================================
+# Local Android SDK paths (contains user-specific paths)
+**/local.properties
+**/keystore.properties
+**/*.keystore
+**/*.jks
+
+# Android build outputs
+**/build/
+**/app/build/
+**/captured/
+**/.cxx/
+**/.externalNativeBuild/
+**/.gradle/
+**/gradle-app.setting
+**/gradlew
+**/gradlew.bat
+**/proguard/
+
+# Android generated files
+**/gen/
+**/out/
+**/bin/
+**/res/values/google-services.xml
+
+# ============================================
+# Environment Variables - Sensitive
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.env
+
+# ============================================
+# TypeScript / JavaScript Build Outputs
+# ============================================
+*.js.map
+*.d.ts.map
+dist/
+build/
+out/
+lib/
+*.tsbuildinfo
+
+# ============================================
+# Ionic / Angular Build Outputs
+# ============================================
+www/
+platforms/
+plugins/
+.ionic/
+.angular/
+.angular/cache/
+.sass-cache/
+.nx/
+.nx/cache/
+connect.lock
+coverage/
+.versions/
+.sourcemaps/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.launch
+*.sublime-project
+*.sublime-workspace
+.c9/
+.history/
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ============================================
+# Temporary Files
+# ============================================
+*.tmp
+*.temp
+.tmp/
+.temp/
+*.sw[mnpcod]
+UserInterfaceState.xcuserstate
+
+# ============================================
+# Capacitor
+# ============================================
+.capacitor/
+ios/App/Pods/
+ios/App/Podfile.lock
+
+# ============================================
+# Testing
+# ============================================
+coverage/
+.nyc_output/
+test-results/
+*.spec.ts.snap
+
+# ============================================
+# Miscellaneous
+# ============================================
+*.zip
+*.tar.gz
+*.rar
+.cache/
+.parcel-cache/
+

@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Push Notifications </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Push Notifications</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-padding">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>FCM Token</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="fcmToken; else noToken" class="token-text">{{ fcmToken }}</p>
+        <ng-template #noToken>
+          <p class="token-text">Waiting for token...</p>
+        </ng-template>
+        <ion-button
+          *ngIf="fcmToken"
+          expand="block"
+          fill="outline"
+          (click)="copyToken()"
+        >
+          <ion-icon name="copy-outline" slot="start"></ion-icon>
+          Copy Token
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Notification History</ion-card-title>
+        <ion-button
+          *ngIf="notificationHistory.length > 0"
+          fill="clear"
+          size="small"
+          (click)="clearHistory()"
+        >
+          Clear
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="notificationHistory.length === 0" class="empty-state">
+          <p>No notifications received yet.</p>
+        </div>
+        <ion-list *ngIf="notificationHistory.length > 0">
+          <ion-item *ngFor="let notification of notificationHistory">
+            <ion-label>
+              <h2>{{ notification.title }}</h2>
+              <p>{{ notification.body }}</p>
+              <p class="timestamp">{{ formatDate(notification.timestamp) }}</p>
+              <ion-badge *ngIf="notification.tapped" color="success"
+                >Tapped</ion-badge
+              >
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Instructions</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ol>
+          <li>Copy your FCM token above</li>
+          <li>
+            Send a test notification using Firebase Console or your backend
+          </li>
+          <li>
+            Make sure your notification payload includes:
+            <pre><code>{{ '{' }}
+  "notification": {{ '{' }}
+    "title": "Test",
+    "body": "Test notification",
+    "sound": "custom_sound"
+  {{ '}' }},
+  "android": {{ '{' }}
+    "notification": {{ '{' }}
+      "sound": "custom_sound",
+      "channel_id": "custom_sound_channel"
+    {{ '}' }}
+  {{ '}' }}
+{{ '}' }}</code></pre>
+          </li>
+          <li>
+            Place your custom sound file in:
+            <code>android/app/src/main/res/raw/</code>
+          </li>
+        </ol>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "kyriosxaris",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
