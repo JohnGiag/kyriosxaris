@@ -28,7 +28,8 @@ public class MainActivity extends BridgeActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             
-            // Create notification channel with custom sound
+            // Create notification channel for custom sounds (sound will be set dynamically per notification)
+            // Don't set a default sound here - let CustomFirebaseMessagingService handle it per notification
             NotificationChannel customChannel = new NotificationChannel(
                 CUSTOM_CHANNEL_ID,
                 CUSTOM_CHANNEL_NAME,
@@ -37,15 +38,8 @@ public class MainActivity extends BridgeActivity {
             customChannel.setDescription(CUSTOM_CHANNEL_DESCRIPTION);
             customChannel.enableLights(true);
             customChannel.enableVibration(true);
-            
-            // Set custom sound - replace "custom_sound" with your actual sound file name (without extension)
-            // Sound file should be placed in: android/app/src/main/res/raw/custom_sound.mp3
-            Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/raw/custom_sound");
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build();
-            customChannel.setSound(soundUri, audioAttributes);
+            // Don't set a default sound - it will be set per notification by CustomFirebaseMessagingService
+            // This allows different sounds (ding, custom_sound, shockding, etc.) to be used dynamically
             
             notificationManager.createNotificationChannel(customChannel);
             
