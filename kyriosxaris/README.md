@@ -11,11 +11,17 @@ When Android receives a notification while the app is completely closed, it cann
 ## Features
 
 - ✅ Firebase Cloud Messaging (FCM) integration
-- ✅ Custom notification sounds that work when app is closed
+- ✅ Custom notification sounds that work when app is closed (Android)
+- ✅ Custom notification sounds for iOS
 - ✅ Android notification channels with pre-creation
 - ✅ Notification history tracking
 - ✅ FCM token display and copying
 - ✅ Foreground and background notification handling
+
+## Platform Support
+
+- **Android**: Full custom sound support with pre-creation solution (see main README)
+- **iOS**: Custom sound support (see [IOS_NOTIFICATION_SETUP.md](./IOS_NOTIFICATION_SETUP.md))
 
 ## Architecture Overview
 
@@ -80,6 +86,7 @@ Add all your custom sound files here. This list determines which channels are pr
 ### 5. Update Package Names
 
 Replace `gr.kyrios.xaris` with your app's package name in:
+
 - `MainActivity.java`
 - `CustomFirebaseMessagingService.java`
 - `SoundUriHelper.java`
@@ -110,6 +117,7 @@ Build and run the app from Android Studio on a physical device or emulator.
 ### Channel ID Pattern
 
 Channels are created with IDs following this pattern:
+
 - Custom sounds: `"custom_sound_channel_" + soundName`
   - Example: `"custom_sound_channel_ding"`, `"custom_sound_channel_shockding"`
 - Fallback: `"custom_sound_channel"` (matches AndroidManifest default)
@@ -120,11 +128,13 @@ Channels are created with IDs following this pattern:
 ### Notification Flow
 
 1. **App Startup** (MainActivity.onCreate):
+
    - Creates channels for all sounds in `CUSTOM_SOUNDS` array
    - Sets sound URI on each channel
    - Android caches these URIs
 
 2. **Notification Received** (CustomFirebaseMessagingService.onMessageReceived):
+
    - Extracts sound name from FCM payload (`androidSound` or `sound` field)
    - Determines channel ID: `"custom_sound_channel_" + soundName`
    - Reuses pre-created channel (if exists) or creates new one
@@ -221,19 +231,23 @@ kyriosxaris/
 ## Key Files
 
 - **MainActivity**: `android/app/src/main/java/gr/kyrios/xaris/MainActivity.java`
+
   - Pre-creates notification channels with sound URIs at startup
   - Critical for custom sounds to work when app is closed
 
 - **CustomFirebaseMessagingService**: `android/app/src/main/java/gr/kyrios/xaris/CustomFirebaseMessagingService.java`
+
   - Handles incoming FCM notifications
   - Reuses pre-created channels from MainActivity
   - Sets custom sound URIs on notifications
 
 - **SoundUriHelper**: `android/app/src/main/java/gr/kyrios/xaris/SoundUriHelper.java`
+
   - Utility for consistent sound URI generation
   - Validates sound files exist in resources
 
 - **Push Notification Service**: `src/app/push-notification.service.ts`
+
   - Handles FCM registration
   - Manages notification listeners
   - Tracks notification history
@@ -253,6 +267,7 @@ kyriosxaris/
 ### Channel Reuse Logic
 
 `CustomFirebaseMessagingService.createNotificationChannel()`:
+
 1. Checks if channel exists (pre-created by MainActivity)
 2. Compares sound URI
 3. Reuses if match, recreates if different
@@ -261,6 +276,7 @@ kyriosxaris/
 ### Sound URI Format
 
 Sound URIs follow this format:
+
 ```
 android.resource://[package-name]/raw/[sound-name]
 ```
@@ -331,6 +347,7 @@ Example: `android.resource://gr.kyrios.xaris/raw/ding`
 To copy this notification system to another project:
 
 1. Copy the three Java files:
+
    - `MainActivity.java`
    - `CustomFirebaseMessagingService.java`
    - `SoundUriHelper.java`
@@ -354,12 +371,26 @@ See the code comments for detailed implementation notes.
 - Android API Level 26+ (Android 8.0+) for notification channels
 - Ionic/Capacitor (for this project)
 
+## iOS Setup
+
+For iOS custom sound notifications setup, see the dedicated guide:
+
+**[IOS_NOTIFICATION_SETUP.md](./IOS_NOTIFICATION_SETUP.md)**
+
+Key differences from Android:
+
+- No notification channels (iOS doesn't use them)
+- No pre-creation needed (iOS can access bundled resources when closed)
+- Different sound file formats (`.caf` or `.aiff` recommended)
+- Requires Mac with Xcode for setup
+
 ## Additional Resources
 
 - [Ionic Documentation](https://ionicframework.com/docs)
 - [Capacitor Push Notifications](https://capacitorjs.com/docs/apis/push-notifications)
 - [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)
 - [Android Notification Channels](https://developer.android.com/develop/ui/views/notifications/channels)
+- [iOS Notification Setup Guide](./IOS_NOTIFICATION_SETUP.md)
 
 ## License
 
